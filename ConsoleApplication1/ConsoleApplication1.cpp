@@ -132,6 +132,53 @@ public:
 
 		return result;
 	}
+
+	string Calculate(queue<string>& sorted_tokens) 
+	{
+		stack<string> calculate_stack;
+		while (!sorted_tokens.empty())
+		{
+			string token = sorted_tokens.front();
+			sorted_tokens.pop();
+
+			if (isdigit(token[0])) {
+				calculate_stack.push(token);
+			}
+			else 
+			{
+				double secondDigit = stod(calculate_stack.top());
+				calculate_stack.pop();
+				double firstDigit = stod(calculate_stack.top());
+				calculate_stack.pop();
+
+				if (token == "+") {
+					calculate_stack.push(to_string(firstDigit + secondDigit));
+				}
+				else if(token == "*") {
+					calculate_stack.push(to_string(firstDigit * secondDigit));
+				}
+				else if (token == "/") {
+					calculate_stack.push(to_string(firstDigit / secondDigit));
+				}
+				else if (token == "-") {
+					calculate_stack.push(to_string(firstDigit - secondDigit));
+				}
+				else if (token == "min") {
+					calculate_stack.push(to_string(min(firstDigit, secondDigit)));
+				}
+				else if (token == "max") {
+					calculate_stack.push(to_string(max(firstDigit, secondDigit)));
+				}
+				else if (token == "pow") {
+					calculate_stack.push(to_string(pow(firstDigit, secondDigit)));
+				}
+				else if (token == "abs") {
+					calculate_stack.push(to_string(abs(firstDigit)));
+				}
+			}
+		}
+		return calculate_stack.top();
+	}
 };
 
 
@@ -142,22 +189,9 @@ int main()
 
 	Calculator calculator;
 	string* tokens = calculator.Tokenize(input);
-
-
-	for (int i = 0; i < input.length(); i++) {
-		if (tokens[i].empty()) {
-			break;
-		}
-		cout << "Token: " << tokens[i] << endl;
-	}
-
 	queue<string> sy = calculator.ShuntingYard(tokens);
 
-	while (!sy.empty()) {
-		cout << sy.front() << ", ";
-		sy.pop();
-	}
-	cout << endl;
+	cout << calculator.Calculate(sy) << endl;
 
 	delete[] tokens;
 	

@@ -21,16 +21,20 @@ def run_echo(input_data):
 def test_echo():
     tests = [
         {
-            "input": "Hello, world!\n",
-            "expected_output": "Echo: Hello, world!"
+            "input": "5 + 3 * 2\n",
+            "expected_output": "11.000000"
         },
         {
-            "input": "12345\n",
-            "expected_output": "Echo: 12345"
+            "input": "max(5, 2)\n",
+            "expected_output": "5.000000"
         },
         {
-            "input": "Testing echo program\n",
-            "expected_output": "Echo: Testing echo program"
+            "input": "min(3, 4)\n",
+            "expected_output": "3.000000"
+        },
+        {
+            "input": " max(min(3 * 2, 2), 2)\n",
+            "expected_output": "2.000000"
         }
         # Add more test cases as needed
     ]
